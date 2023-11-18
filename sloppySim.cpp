@@ -7,13 +7,11 @@
 #include <random>
 
 const int NUM_ARGS = 7;
+int global = 0;
+pthread_mutex_t glock = PTHREAD_MUTEX_INITIALIZER;
 
-struct counter_t {
-    // Global counter and its lock
-    int global;
-    pthread_mutex_t glock;
-
-    // The local counter
+struct counter {
+    // std::vector<int> locals;
     int local;
 
     // The update frequency
@@ -29,59 +27,65 @@ struct counter_t {
     int cpu_bound;
 };
 
-struct workers {
-    // IDs for threads
-    std::vector<counter_t> workers;
+struct count_obs {
+    std::vector<counter>* c;
 };
 
-void print_params(std::vector<int> vals, int num_args, int work_time) {
+void print_params(std::vector<int> vals, int num_args) {
     // printf("%*d", width, value);
 
     printf("\nYou supplied %d number of argument(s).", num_args);
     printf("\nThe final arguments are as follows:");
-    printf("\n\tn_threads                 : %5d", vals[0]);
-    printf("\n\tsloppiness                : %5d", vals[1]);
-    printf("\n\twork_time                 : %5d", vals[2]);
-    printf("\n\twork_time chosen (random) : %5d", work_time);
-    printf("\n\twork_iterations           : %5d", vals[3]);
+    printf("\n\tn_threads        : %5d", vals[0]);
+    printf("\n\tsloppiness       : %5d", vals[1]);
+    printf("\n\twork_time        : %5d", vals[2]);
+    printf("\n\twork_iterations  : %5d", vals[3]);
 
     vals[4] == 0 ? 
-    printf("\n\tcpu_bound                 : %5s", "false") : 
-    printf("\n\tcpu_bound                 : %5s", "true");
+    printf("\n\tcpu_bound        : %5s", "false") : 
+    printf("\n\tcpu_bound        : %5s", "true");
 
     vals[5] == 0 ? 
-    printf("\n\tdo_logging                : %5s", "false") : 
-    printf("\n\tdo_logging                : %5s", "true");
-    printf("\n");
+    printf("\n\tdo_logging       : %5s", "false") : 
+    printf("\n\tdo_logging       : %5s", "true");
+    printf("\n\n");
 }
 
 void* worker_thread(void* args) {
-    counter_t* c = (counter_t*) args;
+    counter* c = (counter*) args;
+
+    // Get a random work time
+    // https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution
+    std::random_device rd;  // a seed source for the random number engine
+    std::mt19937 gen(rd()); // mersenne_twister_engine seeded with rd()
+    std::uniform_int_distribution<> distrib(
+        0.5*c->work_time, 1.5*c->work_time);
+    c->work_time = distrib(gen);
 
     for (int i=0; i<c->work_iters; ++i) {
         
         // Sleep
         if (c->cpu_bound) {
-            long increments = c->work_time * 1e2;
-            // printf("Increments: %ld", increments);
+            long increments = c->work_time * 1e4;
             for (long j=0; j<increments; ++j)
                 ;
         }
 
+        else
+            usleep(c->work_time);
+
         c->local ++; // Update
 
         // Update
-        if (c->local >= c->sloppiness) {
-            pthread_mutex_lock(&c->glock); // Acquire lock
-            c->global += c->local;
-            pthread_mutex_unlock(&c->glock);
+        if (c->local>= c->sloppiness) {
+            pthread_mutex_lock(&glock); // Acquire lock
+            global += c->local;
+            pthread_mutex_unlock(&glock);
 
             // Reset
             c->local = 0;
         }
     }
-
-    printf("\nWorker ending.");
 
     bool* ok = new bool;
     *ok = true;
@@ -89,12 +93,6 @@ void* worker_thread(void* args) {
 }
 
 int main(int argc, char *argv[]) {
-
-    if (argc > NUM_ARGS) {
-        printf("Number of arguments should be %d. %d provided.\nExiting", (NUM_ARGS - 2), argc);
-        exit(1);
-    }
-
     // Default values
     std::vector<int> vals = {2, 10, 10, 100, 0, 0};
 
@@ -114,57 +112,76 @@ int main(int argc, char *argv[]) {
                 std::string val = argv[i];
                 
                 // Check for the boolean value (string)
-                if ("true" == val)
-                    vals.at(i-1) = 1;
-                else
-                    vals.at(i-1) = 0;
+                "true" == val ? vals.at(i-1) = 1 : vals.at(i-1) = 0;
             }
         }
     }
 
+    else
+        printf("Number of arguments should be %d. %d provided.\nUse defaults...\n", (NUM_ARGS - 2), argc);
+
     // Assigning values...
     int n_threads = vals[0];
     int sloppiness = vals[1];
-    
-    // https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution
-    std::random_device rd;  // a seed source for the random number engine
-    std::mt19937 gen(rd()); // mersenne_twister_engine seeded with rd()
-    std::uniform_int_distribution<> distrib(0.5*vals[2], 1.5*vals[2]);    
-    int work_time = distrib(gen);
-
+    int work_time = vals[2];
     int work_iterations = vals[3];
     int cpu_bound = vals[4];
     int do_logging = vals[5];
 
-    print_params(vals, argc, work_time);
+    print_params(vals, argc);
 
-    // Initialize
-    counter_t c;
-    pthread_mutex_init(&c.glock, NULL);
-    c.global = 0;
-    c.local = 0;
-    c.sloppiness = sloppiness;
-    c.work_iters = work_iterations;
-    c.cpu_bound = cpu_bound;
-    c.work_time = work_time;
+    // Initialize an array of counters
+    std::vector<counter> counters (n_threads);
+    for (int i=0; i<n_threads; ++i) {
+        counter c;
+        c.local = 0;
+        c.sloppiness = sloppiness;
+        c.work_iters = work_iterations;
+        c.work_time = work_time;
+        c.cpu_bound = cpu_bound;
+        
+        counters[i] = c;
+    }
 
-    // Create workers and run them
-    // std::vector<pthread_t> workers(n_threads);
+    // Initialize the count observer structure 
+    // This will have a pointer to the array of structs
+    count_obs count_observer;
+    count_observer.c = &counters;
+
+    // Initialize the worker threads
     pthread_t workers[n_threads];
+    // Pass in each worker to the worker_thread function 
+    // with an instance of a counter
     for (int i=0; i<n_threads; ++i)
-        pthread_create(&workers[i], NULL, worker_thread, &c);
+        pthread_create(&workers[i],NULL, worker_thread, &counters[i]);
+
+    if (do_logging) {
+        int test_time = 10;
+        int log_time = work_time * work_iterations / test_time;
+        printf("Log time: %5d ms\n", log_time);
+
+        for (int i=0; i<test_time; i++) {
+            pthread_mutex_lock(&glock);
+            printf("Global Coutner Value: %5d", global);
+            pthread_mutex_unlock(&glock);
+
+            printf("\tCounter Values: [");
+            for (counter a_counter : counters)
+                printf("%3d", a_counter.local);
+            printf("]\n");
+
+            usleep(log_time);  // Sleep every `log_time` microseconds
+        }
+    }
 
     // Join the workers
     bool* ret;
     bool ok = true;
-
     for (int i=0; i<n_threads; ++i) {
         pthread_join(workers[i], (void**) &ret);
-
         ok &= *ret;
         delete ret;
     }
 
-    printf("\nok: %d", ok);
-    printf("\nFinal Count = %d\n", c.global);
+    printf("\nFinal Global Count = %5d\n", global);
 }
