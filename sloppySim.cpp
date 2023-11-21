@@ -66,7 +66,7 @@ void* worker_thread(void* args) {
         
         // Sleep
         if (c->cpu_bound) {
-            long increments = c->work_time * 1e4;
+            long increments = c->work_time * 1e6;
             for (long j=0; j<increments; ++j)
                 ;
         }
