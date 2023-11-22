@@ -117,9 +117,10 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    else
+    else {
         printf("Number of arguments should be %d. %d provided.\n", (NUM_ARGS - 2), argc);
         printf("Using defaults\n");
+    }
 
     // Assigning values...
     int n_threads = vals[0];
