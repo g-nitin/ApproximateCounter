@@ -17,8 +17,9 @@ The final arguments are as follows:
 Final Global Count =   200
 ```
 
+Testing with a small number of threads and the defaults
+```
 niting@cocsce-l1d43-03:~/CSCE311/ApproximateCounter$ ./sloppySim 4 5 11 100 true
-Using defaults
 
 You supplied 6 argument(s).
 The final arguments are as follows:
@@ -31,8 +32,11 @@ The final arguments are as follows:
 
 
 Final Global Count =   400
+```
+
+Testing with a small number of threads and not cpu_bound
+```
 niting@cocsce-l1d43-03:~/CSCE311/ApproximateCounter$ time ./sloppySim 4 5 11 100 false true 
-Using defaults
 
 You supplied 7 argument(s).
 The final arguments are as follows:
@@ -44,53 +48,28 @@ The final arguments are as follows:
         do_logging       :  true
 
 Log time:   110 ms
-Global Counter Value:     0     Counter Values: [0, 0, 0, 0]
-Global Counter Value:     0     Counter Values: [4, 3, 1, 1]
-Global Counter Value:    10     Counter Values: [1, 0, 4, 3]
-Global Counter Value:    20     Counter Values: [0, 3, 2, 2]
-Global Counter Value:    40     Counter Values: [3, 1, 0, 0]
-Global Counter Value:    45     Counter Values: [1, 4, 3, 3]
-Global Counter Value:    60     Counter Values: [3, 1, 0, 1]
-Global Counter Value:    65     Counter Values: [1, 4, 3, 3]
-Global Counter Value:    80     Counter Values: [4, 1, 0, 1]
-Global Counter Value:    85     Counter Values: [2, 4, 3, 4]
+Global Counter Value:     0     Counter Values: [2, 2, 1, 0]
+Global Counter Value:    10     Counter Values: [1, 0, 4, 1]
+Global Counter Value:    15     Counter Values: [3, 2, 2, 3]
+Global Counter Value:    30     Counter Values: [1, 0, 4, 1]
+Global Counter Value:    35     Counter Values: [4, 2, 2, 3]
+Global Counter Value:    50     Counter Values: [1, 0, 4, 1]
+Global Counter Value:    55     Counter Values: [4, 2, 2, 3]
+Global Counter Value:    70     Counter Values: [2, 0, 4, 0]
+Global Counter Value:    75     Counter Values: [4, 2, 2, 3]
+Global Counter Value:    90     Counter Values: [2, 0, 4, 0]
 
 Final Global Count =   400
 
-real    0m0.014s
-user    0m0.001s
-sys     0m0.010s
-niting@cocsce-l1d43-03:~/CSCE311/ApproximateCounter$ time ./sloppySim 80 5 11 100 false true 
-Using defaults
+real    0m0.013s
+user    0m0.007s
+sys     0m0.001s
+```
 
-You supplied 7 argument(s).
-The final arguments are as follows:
-        n_threads        :    80
-        sloppiness       :     5
-        work_time        :    11
-        work_iterations  :   100
-        cpu_bound        : false
-        do_logging       :  true
-
-Log time:   110 ms
-Global Counter Value:   665     Counter Values: [0, 3, 4, 3, 3, 0, 3, 4, 0, 4, 1, 0, 0, 0, 4, 2, 2, 4, 4, 0, 0, 3, 3, 3, 3, 1, 2, 2, 2, 4, 1, 0, 3, 4, 0, 0, 2, 1, 0, 0, 0, 0, 1, 3, 3, 3, 3, 2, 3, 4, 2, 2, 3, 1, 0, 0, 2, 0, 0, 0, 4, 1, 4, 4, 3, 3, 2, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0]
-Global Counter Value:   865     Counter Values: [4, 1, 2, 0, 0, 3, 0, 2, 3, 2, 4, 3, 2, 3, 2, 0, 0, 2, 3, 2, 3, 1, 0, 2, 1, 0, 4, 0, 1, 3, 4, 4, 0, 2, 3, 3, 0, 4, 3, 3, 2, 4, 3, 1, 0, 0, 1, 0, 2, 4, 0, 0, 1, 3, 2, 2, 0, 3, 2, 3, 2, 4, 2, 2, 0, 1, 0, 0, 0, 0, 1, 4, 4, 0, 0, 3, 2, 3, 3, 3]
-Global Counter Value:  1105     Counter Values: [2, 3, 4, 4, 3, 1, 3, 4, 0, 0, 1, 0, 0, 0, 4, 3, 3, 4, 0, 0, 0, 4, 3, 0, 4, 3, 2, 3, 0, 0, 2, 1, 3, 4, 0, 1, 4, 2, 0, 0, 0, 1, 1, 3, 3, 3, 3, 3, 0, 1, 2, 2, 3, 1, 4, 0, 3, 1, 0, 1, 0, 2, 4, 0, 4, 0, 3, 2, 2, 2, 4, 1, 2, 3, 2, 0, 1, 0, 0, 1]
-Global Counter Value:  1345     Counter Values: [0, 2, 3, 1, 2, 4, 1, 3, 3, 2, 0, 0, 4, 3, 2, 0, 0, 2, 3, 4, 3, 1, 1, 4, 3, 1, 0, 1, 3, 3, 0, 0, 1, 3, 3, 3, 2, 4, 4, 4, 3, 0, 0, 1, 2, 2, 1, 1, 2, 0, 1, 1, 1, 0, 2, 2, 1, 4, 4, 3, 4, 0, 3, 2, 2, 3, 1, 1, 1, 1, 1, 0, 0, 1, 0, 4, 3, 4, 4, 4]
-Global Counter Value:  1565     Counter Values: [3, 1, 0, 4, 4, 3, 4, 0, 1, 0, 2, 2, 2, 1, 0, 3, 3, 0, 1, 1, 1, 4, 4, 2, 0, 3, 3, 4, 1, 1, 3, 2, 4, 0, 1, 1, 4, 3, 1, 2, 1, 2, 2, 4, 4, 0, 4, 3, 1, 4, 4, 3, 4, 2, 0, 0, 3, 2, 1, 2, 1, 4, 0, 0, 0, 0, 4, 4, 3, 4, 4, 2, 4, 4, 3, 1, 2, 1, 1, 2]
-Global Counter Value:  1830     Counter Values: [2, 4, 3, 2, 2, 1, 4, 3, 4, 3, 2, 0, 0, 0, 3, 1, 1, 4, 4, 0, 0, 2, 2, 1, 3, 1, 2, 2, 1, 4, 0, 1, 3, 3, 4, 4, 3, 2, 4, 4, 4, 0, 1, 2, 3, 3, 2, 1, 4, 1, 1, 2, 2, 0, 3, 3, 2, 0, 0, 0, 0, 2, 3, 4, 3, 4, 3, 1, 2, 2, 2, 1, 1, 2, 1, 0, 0, 4, 0, 0]
-Global Counter Value:  2055     Counter Values: [4, 1, 1, 0, 0, 4, 2, 1, 2, 1, 4, 3, 2, 3, 1, 0, 4, 1, 2, 3, 2, 0, 0, 4, 2, 4, 0, 0, 4, 2, 3, 3, 1, 1, 2, 2, 1, 0, 2, 3, 2, 3, 3, 0, 0, 0, 0, 4, 2, 4, 4, 4, 0, 3, 1, 2, 4, 2, 2, 2, 2, 4, 1, 2, 0, 2, 1, 0, 0, 4, 0, 3, 4, 0, 4, 3, 2, 2, 2, 4]
-Global Counter Value:  2365     Counter Values: [3, 4, 4, 3, 4, 2, 0, 0, 1, 0, 2, 3, 1, 1, 0, 0, 3, 0, 1, 1, 1, 3, 4, 3, 1, 2, 2, 3, 4, 1, 2, 2, 0, 4, 0, 1, 0, 0, 0, 1, 0, 2, 2, 4, 4, 0, 4, 2, 0, 3, 2, 2, 4, 2, 0, 0, 3, 1, 1, 1, 1, 3, 0, 0, 4, 0, 4, 3, 3, 3, 4, 2, 2, 4, 2, 1, 2, 1, 1, 4]
-Global Counter Value:  2585     Counter Values: [1, 2, 3, 2, 2, 0, 4, 3, 4, 4, 1, 1, 4, 4, 3, 3, 1, 3, 4, 4, 4, 2, 2, 1, 4, 1, 1, 1, 2, 4, 0, 0, 4, 3, 4, 4, 3, 3, 4, 4, 4, 0, 0, 2, 2, 3, 2, 1, 3, 2, 1, 0, 2, 0, 2, 3, 1, 4, 4, 4, 4, 1, 3, 3, 2, 4, 2, 1, 1, 1, 2, 0, 1, 2, 1, 4, 5, 4, 3, 2]
-Global Counter Value:  2810     Counter Values: [3, 0, 1, 4, 0, 3, 1, 0, 2, 1, 3, 3, 2, 2, 1, 0, 4, 0, 2, 1, 1, 4, 4, 3, 2, 3, 4, 4, 4, 2, 3, 3, 1, 1, 1, 1, 0, 0, 1, 1, 1, 3, 3, 0, 0, 0, 0, 3, 0, 1, 3, 3, 0, 3, 0, 0, 4, 2, 1, 3, 1, 3, 0, 0, 0, 2, 0, 4, 4, 4, 4, 2, 3, 0, 3, 1, 2, 1, 2, 4]
-
-Final Global Count =  8000
-
-real    0m0.014s
-user    0m0.013s
-sys     0m0.010s
-niting@cocsce-l1d43-03:~/CSCE311/ApproximateCounter$ time ./sloppySim 4 5 11 100 true true
-Using defaults
+Testing with a small number of threads and cpu_bound.
+Since, this is cpu_bound, it takes more time than the previous command.
+```
+niting@cocsce-l1d43-03:~/CSCE311/ApproximateCounter$ time ./sloppySim 4 5 11 100 true true 
 
 You supplied 7 argument(s).
 The final arguments are as follows:
@@ -103,23 +82,59 @@ The final arguments are as follows:
 
 Log time:   110 ms
 Global Counter Value:     0     Counter Values: [0, 0, 0, 0]
-Global Counter Value:    45     Counter Values: [3, 2, 3, 1]
-Global Counter Value:   105     Counter Values: [1, 0, 2, 2]
-Global Counter Value:   155     Counter Values: [3, 2, 1, 3]
-Global Counter Value:   210     Counter Values: [1, 4, 0, 4]
-Global Counter Value:   255     Counter Values: [0, 2, 4, 1]
-Global Counter Value:   285     Counter Values: [0, 4, 2, 2]
-Global Counter Value:   320     Counter Values: [0, 2, 1, 3]
-Global Counter Value:   360     Counter Values: [0, 0, 0, 0]
-Global Counter Value:   375     Counter Values: [0, 0, 4, 0]
+Global Counter Value:    20     Counter Values: [3, 4, 4, 4]
+Global Counter Value:    60     Counter Values: [1, 4, 4, 3]
+Global Counter Value:    95     Counter Values: [4, 3, 3, 3]
+Global Counter Value:   135     Counter Values: [2, 3, 3, 3]
+Global Counter Value:   175     Counter Values: [0, 2, 2, 3]
+Global Counter Value:   210     Counter Values: [3, 1, 2, 2]
+Global Counter Value:   250     Counter Values: [2, 1, 1, 2]
+Global Counter Value:   290     Counter Values: [0, 1, 1, 2]
+Global Counter Value:   325     Counter Values: [3, 0, 0, 1]
 
 Final Global Count =   400
 
-real    0m2.573s
-user    0m9.723s
-sys     0m0.005s
-niting@cocsce-l1d43-03:~/CSCE311/ApproximateCounter$ time ./sloppySim 80 5 11 100 true true
-Using defaults
+real    0m2.809s
+user    0m12.338s
+sys     0m0.001s
+```
+
+Testing with a large number of threads and not cpu_bound
+```
+niting@cocsce-l1d43-03:~/CSCE311/ApproximateCounter$ time ./sloppySim 80 5 11 100 false true 
+
+You supplied 7 argument(s).
+The final arguments are as follows:
+        n_threads        :    80
+        sloppiness       :     5
+        work_time        :    11
+        work_iterations  :   100
+        cpu_bound        : false
+        do_logging       :  true
+
+Log time:   110 ms
+Global Counter Value:   855     Counter Values: [3, 1, 2, 1, 0, 3, 4, 3, 2, 0, 3, 1, 0, 1, 3, 2, 1, 0, 2, 2, 1, 1, 0, 1, 0, 1, 4, 4, 3, 0, 0, 4, 3, 0, 3, 1, 2, 1, 1, 2, 0, 1, 1, 0, 0, 1, 0, 4, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 2, 0, 0, 4, 4, 4, 3, 4, 4, 3, 2, 1, 1, 1, 0, 0, 0, 0]
+Global Counter Value:  1050     Counter Values: [1, 0, 0, 4, 4, 1, 2, 1, 0, 3, 1, 4, 4, 4, 1, 4, 4, 3, 0, 1, 4, 4, 3, 4, 3, 0, 2, 3, 1, 3, 4, 2, 1, 3, 1, 4, 1, 4, 4, 1, 4, 4, 4, 4, 3, 4, 3, 2, 2, 2, 2, 1, 1, 1, 0, 0, 0, 4, 4, 4, 4, 4, 0, 3, 3, 2, 2, 2, 1, 2, 2, 1, 0, 4, 0, 4, 0, 3, 3, 2]
+Global Counter Value:  1310     Counter Values: [3, 3, 3, 2, 1, 4, 0, 3, 3, 1, 4, 2, 2, 2, 3, 3, 2, 1, 2, 4, 1, 2, 1, 3, 1, 2, 0, 2, 3, 1, 2, 0, 3, 1, 3, 2, 3, 2, 2, 0, 2, 2, 1, 2, 1, 1, 0, 0, 0, 0, 4, 4, 4, 4, 2, 2, 2, 3, 2, 3, 2, 2, 3, 1, 0, 0, 0, 4, 3, 0, 0, 4, 3, 1, 3, 2, 2, 0, 2, 0]
+Global Counter Value:  1570     Counter Values: [2, 1, 1, 0, 0, 2, 3, 2, 1, 4, 2, 4, 0, 0, 2, 1, 0, 4, 1, 2, 0, 0, 3, 1, 4, 1, 3, 4, 2, 3, 0, 4, 2, 4, 2, 0, 2, 0, 0, 3, 4, 0, 1, 0, 4, 0, 4, 3, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 1, 0, 4, 1, 4, 4, 3, 3, 3, 2, 3, 3, 2, 2, 0, 1, 0, 1, 4, 4, 3]
+Global Counter Value:  1785     Counter Values: [0, 4, 4, 3, 4, 0, 1, 0, 4, 1, 0, 3, 3, 3, 0, 4, 3, 2, 4, 0, 3, 3, 2, 4, 2, 4, 1, 3, 0, 2, 3, 3, 0, 2, 0, 3, 0, 3, 4, 1, 3, 3, 4, 3, 2, 4, 2, 1, 2, 1, 1, 0, 0, 0, 4, 4, 0, 4, 3, 4, 3, 3, 0, 2, 2, 1, 1, 1, 4, 1, 1, 0, 0, 3, 4, 3, 4, 2, 3, 1]
+Global Counter Value:  2060     Counter Values: [4, 2, 2, 1, 2, 3, 0, 3, 2, 0, 3, 1, 1, 1, 3, 2, 1, 0, 2, 3, 1, 1, 0, 2, 0, 3, 4, 1, 3, 0, 1, 2, 3, 0, 3, 2, 3, 1, 3, 4, 1, 1, 2, 1, 0, 2, 0, 4, 1, 4, 4, 3, 3, 3, 2, 2, 3, 2, 1, 2, 1, 1, 3, 0, 0, 4, 4, 4, 3, 4, 4, 3, 3, 1, 2, 1, 2, 0, 1, 4]
+Global Counter Value:  2310     Counter Values: [2, 0, 0, 4, 0, 0, 3, 1, 0, 3, 1, 4, 3, 4, 1, 0, 3, 3, 0, 2, 4, 3, 3, 0, 3, 1, 2, 4, 1, 3, 4, 0, 1, 3, 1, 0, 1, 4, 0, 2, 4, 4, 0, 4, 3, 0, 3, 2, 4, 2, 2, 0, 1, 1, 0, 0, 1, 0, 4, 0, 4, 4, 1, 2, 2, 2, 2, 2, 1, 2, 2, 1, 1, 4, 0, 0, 0, 3, 4, 2]
+Global Counter Value:  2540     Counter Values: [1, 3, 3, 2, 3, 4, 1, 4, 3, 1, 4, 2, 2, 2, 4, 3, 2, 1, 3, 0, 2, 2, 1, 3, 1, 0, 0, 2, 4, 1, 2, 3, 4, 1, 4, 3, 4, 2, 4, 1, 2, 2, 3, 2, 1, 3, 1, 0, 2, 0, 0, 4, 4, 4, 3, 3, 4, 3, 2, 3, 2, 2, 4, 1, 1, 0, 0, 0, 4, 0, 0, 4, 4, 2, 3, 3, 3, 1, 2, 0]
+Global Counter Value:  2810     Counter Values: [4, 1, 1, 1, 1, 3, 4, 3, 1, 4, 2, 0, 0, 0, 2, 1, 0, 4, 1, 3, 0, 0, 4, 1, 4, 4, 3, 0, 2, 4, 0, 1, 2, 4, 2, 1, 2, 0, 2, 4, 0, 0, 1, 0, 4, 1, 4, 3, 0, 3, 3, 2, 2, 2, 1, 1, 2, 1, 0, 1, 0, 0, 2, 4, 4, 3, 3, 3, 2, 3, 3, 2, 2, 0, 1, 1, 1, 4, 0, 3]
+Global Counter Value:  3005     Counter Values: [2, 4, 4, 3, 3, 1, 2, 1, 4, 1, 1, 3, 3, 3, 0, 4, 3, 2, 4, 1, 3, 3, 2, 4, 2, 2, 1, 3, 0, 2, 2, 4, 0, 2, 0, 4, 0, 3, 0, 2, 2, 3, 4, 2, 2, 4, 2, 1, 3, 1, 1, 0, 0, 0, 4, 4, 0, 4, 3, 4, 3, 2, 0, 2, 2, 1, 1, 1, 0, 1, 1, 0, 0, 3, 4, 4, 4, 2, 3, 1]
+
+Final Global Count =  8000
+
+real    0m0.014s
+user    0m0.009s
+sys     0m0.015s
+```
+
+Testing with a large number of threads and cpu_bound.
+The counters display the appropriate values and the time is more than the last command since this is cpu_bound and spinning longer.
+```
+niting@cocsce-l1d43-03:~/CSCE311/ApproximateCounter$ time ./sloppySim 80 5 11 100 true true 
 
 You supplied 7 argument(s).
 The final arguments are as follows:
@@ -132,18 +147,19 @@ The final arguments are as follows:
 
 Log time:   110 ms
 Global Counter Value:     0     Counter Values: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-Global Counter Value:   565     Counter Values: [3, 1, 4, 0, 0, 3, 1, 0, 4, 0, 1, 1, 3, 1, 3, 0, 0, 0, 2, 0, 3, 1, 0, 4, 3, 3, 0, 1, 2, 4, 0, 1, 3, 2, 1, 1, 0, 3, 4, 1, 2, 3, 2, 1, 3, 1, 2, 1, 2, 4, 1, 1, 2, 4, 4, 2, 2, 1, 3, 0, 0, 3, 3, 3, 2, 4, 2, 1, 3, 3, 0, 3, 1, 3, 1, 3, 4, 1, 3, 0]
-Global Counter Value:  1505     Counter Values: [0, 4, 0, 3, 1, 3, 4, 0, 3, 2, 0, 0, 4, 4, 4, 2, 2, 2, 3, 0, 0, 1, 2, 0, 4, 3, 2, 0, 0, 2, 2, 4, 4, 3, 0, 0, 1, 0, 0, 3, 1, 0, 1, 4, 3, 3, 1, 4, 1, 2, 4, 0, 1, 3, 3, 1, 4, 0, 0, 2, 2, 0, 0, 4, 3, 3, 3, 0, 0, 4, 0, 4, 0, 3, 0, 4, 1, 0, 3, 2]
-Global Counter Value:  2435     Counter Values: [1, 2, 1, 2, 2, 4, 1, 0, 2, 4, 3, 3, 2, 2, 0, 4, 0, 1, 4, 4, 4, 0, 1, 3, 1, 3, 1, 3, 2, 4, 4, 4, 0, 4, 0, 3, 3, 2, 3, 1, 0, 3, 1, 2, 4, 0, 0, 1, 0, 4, 1, 3, 2, 2, 2, 4, 2, 3, 1, 4, 4, 1, 1, 0, 4, 1, 3, 4, 1, 0, 4, 0, 3, 3, 4, 1, 2, 3, 3, 0]
-Global Counter Value:  3365     Counter Values: [2, 0, 2, 0, 3, 4, 4, 0, 2, 1, 2, 2, 2, 4, 2, 0, 2, 4, 0, 2, 2, 4, 3, 4, 1, 3, 4, 2, 4, 1, 0, 3, 1, 4, 4, 1, 0, 4, 4, 3, 3, 0, 0, 0, 0, 3, 0, 4, 4, 1, 4, 2, 1, 0, 0, 3, 3, 2, 2, 0, 1, 2, 2, 0, 0, 0, 4, 2, 2, 1, 2, 1, 2, 3, 4, 1, 3, 1, 3, 2]
-Global Counter Value:  4290     Counter Values: [3, 3, 3, 4, 0, 4, 1, 0, 1, 4, 0, 0, 4, 3, 3, 2, 0, 4, 1, 2, 0, 3, 1, 0, 3, 3, 1, 0, 0, 4, 3, 2, 2, 1, 3, 0, 2, 2, 0, 0, 2, 0, 4, 3, 2, 0, 4, 2, 4, 4, 2, 0, 0, 4, 4, 3, 0, 1, 3, 3, 3, 3, 3, 2, 1, 4, 0, 1, 3, 3, 2, 2, 0, 3, 4, 3, 0, 0, 3, 0]
-Global Counter Value:  5125     Counter Values: [4, 1, 4, 0, 2, 0, 4, 0, 0, 1, 0, 3, 4, 0, 0, 4, 3, 3, 3, 1, 0, 1, 3, 2, 3, 4, 4, 4, 0, 2, 0, 0, 4, 3, 2, 4, 4, 0, 1, 3, 1, 0, 3, 1, 4, 3, 3, 0, 4, 2, 1, 0, 4, 0, 0, 1, 0, 4, 3, 0, 0, 0, 0, 2, 3, 0, 2, 4, 4, 4, 1, 4, 4, 3, 0, 1, 2, 4, 0, 2]
-Global Counter Value:  5910     Counter Values: [0, 0, 1, 0, 4, 0, 1, 0, 0, 4, 0, 2, 1, 4, 2, 2, 1, 3, 0, 1, 0, 0, 1, 3, 0, 0, 1, 4, 0, 0, 2, 4, 1, 0, 1, 4, 2, 2, 2, 0, 1, 0, 2, 0, 0, 1, 3, 4, 4, 1, 0, 4, 3, 0, 0, 1, 0, 2, 0, 2, 3, 2, 2, 0, 0, 0, 0, 3, 0, 1, 1, 0, 3, 3, 0, 4, 4, 4, 2, 4]
-Global Counter Value:  6515     Counter Values: [1, 4, 2, 0, 1, 1, 4, 0, 0, 2, 3, 1, 2, 1, 4, 4, 3, 0, 0, 0, 0, 0, 4, 0, 0, 0, 3, 3, 0, 2, 0, 0, 1, 0, 0, 3, 4, 0, 4, 3, 0, 0, 1, 2, 0, 3, 2, 1, 3, 3, 3, 3, 3, 0, 0, 0, 0, 1, 1, 0, 0, 4, 4, 0, 0, 0, 0, 2, 2, 2, 0, 1, 2, 4, 0, 1, 1, 3, 2, 0]
-Global Counter Value:  7025     Counter Values: [0, 1, 4, 0, 2, 1, 1, 0, 4, 0, 3, 4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 3, 0, 0, 0, 0, 2, 2, 0, 0, 1, 4, 0, 0, 2, 0, 1, 1, 0, 0, 0, 0, 2, 1, 0, 0, 4, 0, 4, 2, 2, 2, 4, 4, 0, 0, 0, 0, 0, 2, 3, 0, 3, 1, 4, 0, 0, 3, 3, 4, 0]
+Global Counter Value:   400     Counter Values: [4, 4, 3, 4, 0, 4, 0, 2, 2, 4, 1, 1, 0, 2, 4, 4, 2, 0, 2, 1, 4, 2, 1, 4, 4, 4, 4, 4, 4, 2, 4, 0, 1, 0, 1, 2, 3, 0, 1, 0, 1, 0, 2, 0, 4, 2, 3, 1, 1, 3, 4, 0, 3, 2, 4, 3, 2, 2, 4, 4, 1, 0, 4, 2, 0, 4, 0, 0, 0, 0, 0, 4, 3, 4, 2, 3, 0, 1, 1, 4]
+Global Counter Value:  1420     Counter Values: [2, 3, 2, 3, 0, 1, 3, 4, 0, 4, 2, 2, 3, 3, 2, 1, 1, 0, 4, 3, 3, 1, 0, 2, 2, 4, 4, 2, 1, 0, 2, 3, 0, 0, 4, 3, 4, 0, 3, 0, 2, 0, 4, 3, 3, 0, 4, 0, 2, 2, 2, 1, 2, 4, 2, 0, 3, 1, 3, 3, 4, 4, 3, 1, 1, 2, 0, 4, 2, 1, 2, 4, 0, 3, 4, 1, 4, 2, 1, 1]
+Global Counter Value:  2400     Counter Values: [4, 2, 0, 0, 4, 4, 1, 2, 4, 0, 2, 3, 2, 4, 0, 3, 3, 1, 1, 0, 0, 0, 3, 4, 0, 1, 2, 0, 4, 2, 0, 2, 0, 0, 2, 1, 3, 4, 4, 3, 2, 0, 4, 2, 1, 1, 2, 4, 3, 0, 0, 2, 1, 1, 4, 2, 4, 0, 0, 2, 1, 3, 1, 3, 1, 0, 0, 1, 3, 0, 4, 4, 2, 2, 1, 2, 2, 3, 1, 4]
+Global Counter Value:  3335     Counter Values: [1, 0, 4, 3, 3, 1, 4, 4, 2, 1, 2, 0, 0, 0, 3, 0, 0, 2, 4, 1, 2, 4, 2, 1, 2, 1, 0, 3, 1, 0, 3, 0, 4, 0, 4, 0, 2, 3, 0, 2, 2, 0, 4, 0, 0, 2, 0, 3, 4, 4, 2, 2, 4, 4, 1, 4, 4, 4, 3, 0, 3, 1, 4, 0, 0, 2, 4, 2, 4, 4, 2, 3, 4, 0, 3, 4, 1, 4, 1, 1]
+Global Counter Value:  4340     Counter Values: [4, 4, 2, 0, 3, 0, 2, 2, 1, 2, 2, 0, 4, 2, 2, 2, 3, 3, 1, 3, 1, 3, 1, 3, 1, 4, 3, 1, 4, 0, 1, 4, 3, 0, 1, 4, 1, 3, 1, 0, 3, 1, 1, 4, 2, 3, 0, 3, 1, 3, 4, 4, 3, 2, 4, 2, 1, 2, 2, 3, 0, 0, 1, 0, 4, 0, 3, 0, 0, 0, 4, 2, 1, 4, 1, 1, 0, 1, 1, 0]
+Global Counter Value:  5085     Counter Values: [1, 3, 0, 2, 2, 0, 4, 4, 4, 3, 2, 1, 2, 2, 4, 3, 4, 4, 3, 4, 3, 0, 0, 0, 3, 0, 0, 3, 1, 0, 4, 0, 2, 4, 3, 0, 0, 2, 2, 3, 2, 1, 0, 0, 0, 3, 0, 3, 2, 1, 2, 4, 2, 3, 1, 3, 0, 0, 0, 2, 2, 0, 4, 0, 3, 3, 2, 3, 1, 0, 1, 0, 3, 0, 3, 3, 0, 1, 1, 0]
+Global Counter Value:  5730     Counter Values: [4, 1, 3, 0, 1, 0, 2, 1, 2, 0, 2, 1, 1, 3, 2, 0, 1, 0, 0, 1, 0, 4, 0, 2, 1, 0, 3, 1, 3, 0, 2, 0, 1, 4, 0, 0, 0, 1, 3, 2, 2, 1, 0, 0, 3, 0, 0, 2, 3, 4, 4, 0, 0, 1, 4, 0, 0, 4, 3, 0, 3, 0, 2, 0, 2, 0, 2, 0, 1, 0, 4, 3, 0, 0, 0, 0, 0, 2, 1, 0]
+Global Counter Value:  6265     Counter Values: [2, 0, 1, 2, 0, 0, 0, 4, 0, 0, 3, 2, 0, 3, 4, 1, 3, 0, 1, 2, 2, 0, 0, 4, 3, 0, 1, 3, 0, 0, 1, 0, 0, 4, 2, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 0, 0, 2, 4, 0, 2, 0, 0, 4, 2, 2, 0, 0, 1, 3, 0, 0, 0, 0, 2, 3, 1, 0, 2, 0, 1, 0, 1, 0, 0, 2, 0, 1, 1, 0]
+Global Counter Value:  6650     Counter Values: [4, 2, 4, 4, 3, 0, 3, 0, 3, 0, 2, 2, 2, 3, 1, 2, 0, 0, 0, 2, 3, 0, 0, 0, 4, 0, 3, 0, 1, 0, 3, 0, 3, 3, 0, 0, 0, 4, 0, 3, 4, 1, 0, 0, 4, 0, 0, 2, 0, 0, 4, 0, 0, 0, 4, 4, 0, 0, 3, 0, 1, 0, 3, 0, 0, 0, 4, 0, 2, 0, 3, 0, 2, 0, 0, 4, 0, 1, 0, 0]
 
 Final Global Count =  8000
 
-real    0m22.680s
-user    2m59.827s
-sys     0m0.000s
+real    0m23.035s
+user    3m1.848s
+sys     0m0.001s
+```
