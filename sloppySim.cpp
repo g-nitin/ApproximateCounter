@@ -34,7 +34,7 @@ struct count_obs {
 void print_params(std::vector<int> vals, int num_args) {
     // printf("%*d", width, value);
 
-    printf("\nYou supplied %d number of argument(s).", num_args);
+    printf("\nYou supplied %d argument(s).", num_args);
     printf("\nThe final arguments are as follows:");
     printf("\n\tn_threads        : %5d", vals[0]);
     printf("\n\tsloppiness       : %5d", vals[1]);
@@ -118,7 +118,8 @@ int main(int argc, char *argv[]) {
     }
 
     else
-        printf("Number of arguments should be %d. %d provided.\nUse defaults...\n", (NUM_ARGS - 2), argc);
+        printf("Number of arguments should be %d. %d provided.\n", (NUM_ARGS - 2), argc);
+        printf("Using defaults\n");
 
     // Assigning values...
     int n_threads = vals[0];
@@ -162,15 +163,25 @@ int main(int argc, char *argv[]) {
 
         for (int i=0; i<test_time; i++) {
             pthread_mutex_lock(&glock);
-            printf("Global Coutner Value: %5d", global);
+            printf("Global Counter Value: %5d", global);
             pthread_mutex_unlock(&glock);
 
-            printf("\tCounter Values: [");
+            std::string values = "\tCounter Values: [";
             for (counter a_counter : counters)
-                printf("%3d", a_counter.local);
-            printf("]\n");
+                values += std::to_string(a_counter.local) + ", ";
+            values.pop_back();  // Remove the last ','
+            values.pop_back();  // Remove the last ' '
+            values += "]\n";
+            std::cout << values;
 
-            usleep(log_time);  // Sleep every `log_time` microseconds
+            // Sleep every `log_time` microseconds
+            if (cpu_bound) {
+                long increments = log_time * 1e6;
+                for (long j=0; j<increments; ++j)
+                    ;
+            }
+            else
+                usleep(log_time);
         }
     }
 
